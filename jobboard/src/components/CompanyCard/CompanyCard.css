@@ -1,0 +1,170 @@
+/* Companies Grid Container */
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+/* Company Card Styles */
+.company {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  text-decoration: none;
+  display: block;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.company:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--gray-300);
+  background: var(--black);
+  color: var(--white);
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23000000" stroke="%23FFFFFF" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+}
+
+.company:hover .company-name {
+  color: var(--white);
+}
+
+.company:active {
+  transform: translateY(-4px) scale(0.98);
+}
+
+.company-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+  line-height: 1;
+}
+
+.company-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gray-800);
+  transition: color 0.3s ease;
+  line-height: 1.2;
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .companies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 14px;
+  }
+  
+  .company {
+    padding: 20px 12px;
+    min-height: 100px;
+  }
+  
+  .company-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .company-name {
+    font-size: 13px;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .company {
+    padding: 16px 8px;
+    border-radius: 10px;
+    min-height: 90px;
+  }
+  
+  .company-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  
+  .company-name {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  /* Reduce hover effects on mobile */
+  .company:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .company {
+    padding: 12px 6px;
+    border-radius: 8px;
+    min-height: 80px;
+  }
+  
+  .company-icon {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  
+  .company-name {
+    font-size: 11px;
+    font-weight: 500;
+  }
+  
+  /* Disable complex hover effects on small screens */
+  .company:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    background: var(--gray-50);
+    color: var(--gray-800);
+  }
+  
+  .company:hover .company-name {
+    color: var(--gray-800);
+  }
+}
+
+/* Very Small Mobile (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  
+  .company {
+    padding: 10px 4px;
+    min-height: 75px;
+  }
+  
+  .company-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  
+  .company-name {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+}

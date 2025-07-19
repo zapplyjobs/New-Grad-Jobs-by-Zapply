@@ -1,0 +1,26 @@
+.typed-highlight {
+  background: var(--black);
+  color: var(--white);
+  padding: 4px 16px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.cursor {
+  color: var(--accent);
+  animation: blink 1s infinite;
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .typed-highlight {
+    padding: 2px 12px;
+    font-size: 0.9em;
+  }
+}

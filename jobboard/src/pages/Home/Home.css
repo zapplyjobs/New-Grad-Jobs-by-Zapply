@@ -1,0 +1,578 @@
+/* Hero Section */
+.hero {
+  padding: 140px 0 80px;
+  background: linear-gradient(to bottom, var(--gray-50), var(--white));
+  position: relative;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.8s ease, float 3s ease-in-out infinite 1s;
+}
+
+.hero-title {
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: var(--black);
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: var(--gray-600);
+  margin-bottom: 40px;
+  font-weight: 400;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  animation: fadeInUp 0.8s ease 0.4s both;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Companies Section */
+.companies {
+  padding: 100px 0;
+  background: var(--white);
+}
+
+.companies-header {
+  background: var(--black);
+  padding: 60px 0;
+  margin: -100px 0 60px 0;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFFFFF" stroke="%23000000" stroke-width="2" stroke-linejoin="round" d="M15 3H8L4 14h6l-3 8 13-12h-7.5L15 3z"></path></svg>'), auto;
+}
+
+.companies-header .section-title {
+  color: var(--white);
+}
+
+.companies-header .section-subtitle {
+  color: var(--gray-300);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 18px;
+  margin-bottom: 60px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Features Section */
+.features {
+  padding: 100px 0;
+  background: var(--gray-50);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin-top: 60px;
+}
+
+/* CTA Section */
+.cta {
+  padding: 100px 0;
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFFFFF" stroke="%23000000" stroke-width="2" stroke-linejoin="round" d="M15 3H8L4 14h6l-3 8 13-12h-7.5L15 3z"></path></svg>'), auto;
+}
+
+.cta-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.cta-subtitle {
+  font-size: 20px;
+  color: var(--gray-300);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Footer */
+.footer {
+  padding: 60px 0 40px;
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  text-align: center;
+}
+
+.footer-stats {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px; /* Adjust gap between items as needed */
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.footer-note {
+  color: var(--gray-500);
+  margin-bottom: 24px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  color: var(--gray-600);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--black);
+}
+
+.footer-meta {
+  color: var(--gray-400);
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* Add to src/pages/Home/Home.css */
+.job-listings {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.loading-jobs {
+  padding: 40px;
+  text-align: center;
+  color: #6c757d;
+}
+
+
+/* src/pages/Home/Home.css */
+/* ... existing styles ... */
+
+.job-listings {
+  padding: 4rem 0;
+  background: #f8f9fa;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 2rem;
+  max-width: 700px;
+}
+
+.loading-jobs {
+  padding: 2rem;
+  text-align: center;
+  color: #868e96;
+  font-size: 1.1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+
+/* Additional CSS for Home.css - Debug and Error States */
+
+/* No Jobs Found State */
+.no-jobs-found {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  margin: 24px 0;
+  color: #64748b;
+}
+
+.no-jobs-found h3 {
+  color: #374151;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.no-jobs-found p {
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.no-jobs-found ul {
+  text-align: left;
+  display: inline-block;
+  margin-bottom: 24px;
+  padding-left: 20px;
+}
+
+.no-jobs-found li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Debug Info Box */
+.debug-info {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  color: #6b7280;
+  border-left: 4px solid #3b82f6;
+}
+
+.debug-info code {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+/* Enhanced Loading State */
+.loading-jobs {
+  text-align: center;
+  padding: 80px 20px;
+  color: #64748b;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+.loading-jobs .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.loading-jobs p {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.loading-jobs .loading-details {
+  font-size: 14px;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Error Message Enhancement */
+.error-message {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+  border: 1px solid #fca5a5;
+  border-left: 4px solid #dc2626;
+}
+
+.error-message h3 {
+  margin-bottom: 12px;
+  color: #7f1d1d;
+}
+
+.error-message p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.error-message code {
+  background: rgba(220, 38, 38, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+}
+
+/* Success Message */
+.success-message {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  color: #166534;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #16a34a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Stats Loading Enhancement */
+.stats-loading {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Job Table Enhancements for Empty State */
+.job-table-container.empty {
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+}
+
+.job-table-container.empty .job-table-wrapper {
+  display: none;
+}
+
+/* Console Log Styles (for debugging) */
+.console-log {
+  background: #1f2937;
+  color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #374151;
+}
+
+.console-log .log-entry {
+  margin-bottom: 4px;
+  padding: 2px 0;
+}
+
+.console-log .log-entry.error {
+  color: #fca5a5;
+}
+
+.console-log .log-entry.warning {
+  color: #fcd34d;
+}
+
+.console-log .log-entry.info {
+  color: #93c5fd;
+}
+
+.console-log .log-entry.success {
+  color: #86efac;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .no-jobs-found {
+    padding: 40px 16px;
+  }
+  
+  .no-jobs-found h3 {
+    font-size: 20px;
+  }
+  
+  .loading-jobs {
+    padding: 60px 16px;
+  }
+  
+  .debug-info {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .error-message {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-jobs-found ul {
+    text-align: center;
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .no-jobs-found li::before {
+    content: "• ";
+    color: #667eea;
+    font-weight: bold;
+  }
+  
+  .loading-jobs {
+    padding: 40px 12px;
+  }
+  
+  .loading-jobs p {
+    font-size: 14px;
+  }
+  
+  .debug-info {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+}
+
+/* Animation for state transitions */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pulse animation for loading text */
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 0 60px;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  
+  .companies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+  
+  .section-subtitle {
+    font-size: 16px;
+  }
+  
+  .cta-title {
+    font-size: 36px;
+  }
+  
+  .cta-subtitle {
+    font-size: 18px;
+  }
+}

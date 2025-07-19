@@ -1,0 +1,64 @@
+.stat {
+  text-align: center;
+  transition: transform 0.3s ease;
+  min-height: 120px; /* Ensure consistent height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 8px;
+  white-space: nowrap; /* Prevent wrapping for numbers */
+}
+
+/* Special styling for date stat */
+.stat-number.date-stat {
+  font-size: 24px; /* Smaller font for multi-line date */
+  line-height: 1.1;
+  white-space: normal; /* Allow wrapping for date */
+}
+
+.stat-label {
+  color: var(--gray-500);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: auto; /* Push label to bottom */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stat {
+    min-height: 100px;
+  }
+  
+  .stat-number {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stat-number {
+    font-size: 36px;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+  }
+}

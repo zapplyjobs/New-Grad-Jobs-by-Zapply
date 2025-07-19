@@ -1,0 +1,778 @@
+/* JobTable.css - Themed to match your design system */
+
+.job-table-container {
+  max-width: 100%;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-table-container:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Search Section */
+.search-section {
+  padding: 40px;
+  /* background: var(--black); */
+  position: relative;
+  overflow: hidden;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFFFFF" stroke="%23000000" stroke-width="2" stroke-linejoin="round" d="M15 3H8L4 14h6l-3 8 13-12h-7.5L15 3z"></path></svg>'), auto;
+}
+
+.search-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gray-400), var(--gray-600));
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 24px;
+  border: 1px solid var(--gray-300);
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 500;
+  background: var(--white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), text;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--gray-400);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+  color: var(--gray-500);
+  font-weight: 400;
+}
+
+/* Filters Section */
+.job-filters {
+  padding: 30px 40px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  overflow-x: auto; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.filter-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+  flex-wrap: nowrap; /* Change from wrap to nowrap */
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto; /* Add horizontal scrolling if needed */
+  padding-bottom: 10px; /* Space for scrollbar */
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-select {
+  padding: 12px 20px;
+  border: 1px solid var(--gray-300);
+  border-radius: 100px;
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 140px;
+  flex: 0 0 auto; /* Prevent growing/shrinking */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+}
+
+.filter-select:focus,
+.filter-select:hover {
+  outline: none;
+  border-color: var(--gray-400);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.reset-filters {
+  padding: 12px 24px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23000000" stroke="%23FFFFFF" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reset-filters:hover {
+  background: var(--gray-800);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 40px;
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 12px 20px;
+  background: var(--white);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+  transform: translateY(-1px);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-number {
+  padding: 10px 14px;
+  background: var(--white);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 40px;
+  text-align: center;
+}
+
+.pagination-number:hover:not(:disabled) {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+  transform: translateY(-1px);
+}
+
+.pagination-number.active {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-number.dots {
+  background: none;
+  border: none;
+  cursor: default;
+  color: var(--gray-400);
+  padding: 10px 8px;
+}
+
+.pagination-number.dots:hover {
+  background: none;
+  transform: none;
+}
+
+.reset-filters:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Results Summary */
+.results-summary {
+  padding: 20px 40px;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 14px;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+/* Table Styles */
+.job-table-wrapper {
+  overflow-x: auto;
+  background: var(--white);
+}
+
+.job-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+}
+
+.job-table th {
+  background: var(--gray-50);
+  padding: 20px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gray-800);
+  border-bottom: 2px solid var(--gray-200);
+  white-space: nowrap;
+  position: relative;
+}
+
+.job-table th.sortable {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-table th.sortable:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.job-table td {
+  padding: 20px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: top;
+}
+
+.job-row {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), default;
+}
+
+.job-row:hover {
+  background: var(--gray-50);
+  transform: scale(1.01);
+}
+
+.job-row:hover .company-name,
+.job-row:hover .role-title {
+  color: var(--black);
+}
+
+/* Company Cell */
+.company-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.company-emoji {
+  font-size: 24px;
+  width: 32px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.job-row:hover .company-emoji {
+  transform: scale(1.2);
+}
+
+.company-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--gray-800);
+  transition: all 0.3s ease;
+}
+
+/* Role Cell */
+.role-cell {
+  min-width: 220px;
+}
+
+.role-title {
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 8px;
+  display: block;
+  line-height: 1.4;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.role-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.badge.remote {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+}
+
+.badge.us-only {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+}
+
+.job-row:hover .badge {
+  background: var(--black);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* Location, Posted, Category Cells */
+.location-cell,
+.posted-cell,
+.category-cell {
+  color: var(--gray-600);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.posted-cell {
+  white-space: nowrap;
+}
+
+/* Level Badge */
+.level-badge {
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  border: 1px solid var(--gray-200);
+}
+
+.level-badge.level-entrylevel {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.level-badge.level-midlevel {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.level-badge.level-senior {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.job-row:hover .level-badge {
+  background: var(--black);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* Apply Button */
+.apply-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--black);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23000000" stroke="%23FFFFFF" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+}
+
+.apply-button:hover {
+  background: var(--gray-800);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.apply-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* No Results */
+.no-jobs {
+  text-align: center;
+  padding: 60px 40px;
+}
+
+.no-results {
+  color: var(--gray-600);
+}
+
+.no-results h3 {
+  margin-bottom: 16px;
+  color: var(--gray-800);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.no-results p {
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.clear-filters-btn {
+  padding: 12px 24px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  font-weight: 600;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23000000" stroke="%23FFFFFF" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clear-filters-btn:hover {
+  background: var(--gray-800);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+.job-table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px;
+  background: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.separator {
+  color: var(--gray-400);
+  font-weight: 300;
+}
+
+.job-count, 
+.companies-count {
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.last-updated {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+/* Loading and Error States */
+.loading-jobs {
+  text-align: center;
+  padding: 80px 40px;
+  color: var(--gray-600);
+  background: var(--white);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gray-200);
+  border-top: 4px solid var(--black);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+.loading-jobs p {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--gray-700);
+}
+
+.loading-jobs .loading-details {
+  font-size: 14px;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Animations */
+.job-table-container .fade-in {
+  animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-section {
+    padding: 24px;
+  }
+  
+  .job-filters {
+    padding: 20px 24px;
+  }
+  
+  .filter-row {
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .filter-select {
+    min-width: 120px;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+  
+  .pagination {
+    padding: 20px 24px;
+    gap: 8px;
+  }
+  
+  .pagination-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .pagination-number {
+    padding: 8px 10px;
+    font-size: 13px;
+    min-width: 36px;
+  }
+  
+  .results-summary,
+  .job-table-footer {
+    padding: 16px 24px;
+  }
+  
+  .job-table th,
+  .job-table td {
+    padding: 16px 12px;
+    font-size: 13px;
+  }
+  
+  .company-cell {
+    gap: 12px;
+  }
+  
+  .company-emoji {
+    font-size: 20px;
+    width: 24px;
+  }
+  
+  .role-cell {
+    min-width: 180px;
+  }
+  
+  .apply-button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .job-table-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-section {
+    padding: 20px;
+  }
+  
+  .job-filters {
+    padding: 16px 20px;
+  }
+  
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .filter-select {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .reset-filters {
+    width: 100%;
+  }
+  
+  .pagination {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .pagination-numbers {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .pagination-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  
+  .pagination-number {
+    padding: 6px 8px;
+    font-size: 12px;
+    min-width: 32px;
+  }
+  
+  .job-table-wrapper {
+    font-size: 12px;
+  }
+  
+  .company-emoji {
+    font-size: 18px;
+    width: 20px;
+  }
+  
+  .role-badges {
+    margin-top: 6px;
+  }
+  
+  .badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  
+  .level-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .loading-jobs {
+    padding: 60px 20px;
+  }
+  
+  .no-results {
+    padding: 40px 20px;
+  }
+}
+
+/* Dark Mode Support (if you add it later) */
+@media (prefers-color-scheme: dark) {
+  .job-table-container {
+    background: var(--gray-900);
+    border-color: var(--gray-700);
+  }
+  
+  .search-input {
+    background: var(--gray-800);
+    border-color: var(--gray-600);
+    color: var(--white);
+  }
+  
+  .search-input::placeholder {
+    color: var(--gray-400);
+  }
+  
+  .job-filters {
+    background: var(--gray-800);
+  }
+  
+  .filter-select {
+    background: var(--gray-700);
+    border-color: var(--gray-600);
+    color: var(--white);
+  }
+  
+  .job-table {
+    background: var(--gray-900);
+  }
+  
+  .job-table th {
+    background: var(--gray-800);
+    color: var(--white);
+  }
+  
+  .job-row:hover {
+    background: var(--gray-800);
+  }
+  
+  .company-name,
+  .role-title {
+    color: var(--white);
+  }
+}
+
+/* Special Focus States for Accessibility */
+.search-input:focus,
+.filter-select:focus,
+.reset-filters:focus,
+.apply-button:focus,
+.clear-filters-btn:focus {
+  outline: 2px solid var(--gray-400);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar for Table */
+.job-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.job-table-wrapper::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 4px;
+}
+
+.job-table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.job-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-600);
+}
