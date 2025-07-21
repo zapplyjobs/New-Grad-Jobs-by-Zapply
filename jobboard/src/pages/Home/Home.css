@@ -54,7 +54,7 @@
   animation: fadeInUp 0.8s ease 0.3s both;
 }
 
-/* Stats */
+/* Stats - Updated to match HTML styling */
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -62,6 +62,31 @@
   animation: fadeInUp 0.8s ease 0.4s both;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.stat {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--gray-500);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Companies Section */
@@ -204,6 +229,7 @@
   font-size: 14px;
   line-height: 1.5;
 }
+
 /* Add to src/pages/Home/Home.css */
 .job-listings {
   padding: 60px 0;
@@ -215,7 +241,6 @@
   text-align: center;
   color: #6c757d;
 }
-
 
 /* src/pages/Home/Home.css */
 /* ... existing styles ... */
@@ -251,7 +276,6 @@
   margin: 0 auto;
   padding: 0 1.5rem;
 }
-
 
 /* Additional CSS for Home.css - Debug and Error States */
 
@@ -392,6 +416,7 @@
   border-radius: 8px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  grid-column: 1 / -1; /* Span all columns when loading */
 }
 
 /* Job Table Enhancements for Empty State */
@@ -439,71 +464,33 @@
   color: #86efac;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .no-jobs-found {
-    padding: 40px 16px;
-  }
-  
-  .no-jobs-found h3 {
-    font-size: 20px;
-  }
-  
-  .loading-jobs {
-    padding: 60px 16px;
-  }
-  
-  .debug-info {
-    padding: 10px 12px;
-    font-size: 12px;
-  }
-  
-  .error-message {
-    padding: 20px 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .no-jobs-found ul {
-    text-align: center;
-    padding-left: 0;
-    list-style: none;
-  }
-  
-  .no-jobs-found li::before {
-    content: "• ";
-    color: #667eea;
-    font-weight: bold;
-  }
-  
-  .loading-jobs {
-    padding: 40px 12px;
-  }
-  
-  .loading-jobs p {
-    font-size: 14px;
-  }
-  
-  .debug-info {
-    font-size: 11px;
-    padding: 8px 10px;
-  }
-}
-
-/* Animation for state transitions */
-.fade-in {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
+/* Animations */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Scroll Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Loading spinner animation */
@@ -525,6 +512,23 @@
     opacity: 0.5;
   }
 }
+
+/* Animation for state transitions */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero {
@@ -574,5 +578,32 @@
   
   .cta-subtitle {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-jobs-found ul {
+    text-align: center;
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .no-jobs-found li::before {
+    content: "• ";
+    color: #667eea;
+    font-weight: bold;
+  }
+  
+  .loading-jobs {
+    padding: 40px 12px;
+  }
+  
+  .loading-jobs p {
+    font-size: 14px;
+  }
+  
+  .debug-info {
+    font-size: 11px;
+    padding: 8px 10px;
   }
 }

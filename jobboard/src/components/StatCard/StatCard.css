@@ -1,10 +1,10 @@
 .stat {
   text-align: center;
   transition: transform 0.3s ease;
-  min-height: 120px; /* Ensure consistent height */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start; /* Changed from center */
 }
 
 .stat:hover {
@@ -16,7 +16,7 @@
   font-weight: 700;
   color: var(--black);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Keep the 8px spacing */
   white-space: nowrap; /* Prevent wrapping for numbers */
 }
 
@@ -33,29 +33,14 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-top: auto; /* Push label to bottom */
+  /* Removed margin-top: auto */
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .stat {
-    min-height: 100px;
-  }
-  
   .stat-number {
     font-size: 36px;
     line-height: 1.1;
-  }
-  
-  .stat-label {
-    font-size: 12px;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .stat-number {
-    font-size: 36px;
   }
   
   .stat-label {

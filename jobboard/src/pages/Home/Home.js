@@ -36,7 +36,7 @@ const Home = () => {
           { number: githubStats.activeJobs.toString(), label: 'Active Jobs' },
           { number: githubStats.companies.toString(), label: 'Companies' },
           { number: githubStats.faangJobs.toString(), label: 'FAANG+ Roles' },
-          { number: githubStats.lastUpdated, label: 'Last Updated' }
+          { number: '24h', label: 'Update Cycle' }
         ]);
         setIsLoadingStats(false);
         
