@@ -255,7 +255,7 @@ const JobTable = ({ jobs }) => {
             onChange={handleFilterChange}
             className="filter-select"
           >
-            <option value="">All Companies</option>
+            <option value="">Companies</option>
             {companies.map((company, i) => (
               <option key={i} value={company}>{company}</option>
             ))}
@@ -304,7 +304,7 @@ const JobTable = ({ jobs }) => {
             onChange={handleFilterChange}
             className="filter-select"
           >
-            <option value="">All Categories</option>
+            <option value="">Categories</option>
             {categories.map((cat, i) => (
               <option key={i} value={cat}>{cat}</option>
             ))}
@@ -316,7 +316,7 @@ const JobTable = ({ jobs }) => {
             onChange={handleFilterChange}
             className="filter-select"
           >
-            <option value="">Remote Filter</option>
+            <option value="">Mode</option>
             <option value="Yes">Remote Only</option>
             <option value="No">On-site Only</option>
           </select>

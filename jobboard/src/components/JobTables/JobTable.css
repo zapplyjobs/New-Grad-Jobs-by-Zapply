@@ -63,19 +63,15 @@
   padding: 30px 40px;
   background: var(--gray-50);
   border-bottom: 1px solid var(--gray-200);
-  overflow-x: auto; /* Enable horizontal scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .filter-row {
   display: flex;
-  gap: 16px;
+  gap: 10px; /* Reduced from 16px */
   margin-bottom: 0;
-  flex-wrap: nowrap; /* Change from wrap to nowrap */
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  overflow-x: auto; /* Add horizontal scrolling if needed */
-  padding-bottom: 10px; /* Space for scrollbar */
 }
 
 .filter-row:last-child {
@@ -83,14 +79,15 @@
 }
 
 .filter-select {
-  padding: 12px 20px;
+  padding: 10px 16px; /* Reduced from 12px 20px */
   border: 1px solid var(--gray-300);
   border-radius: 100px;
   background: var(--white);
-  font-size: 14px;
+  font-size: 13px; /* Reduced from 14px */
   font-weight: 500;
-  min-width: 140px;
-  flex: 0 0 auto; /* Prevent growing/shrinking */
+  min-width: 100px; /* Reduced from 140px */
+  flex: 1; /* Allow flexible sizing */
+  max-width: 160px; /* Prevent from getting too wide */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
@@ -105,15 +102,17 @@
 }
 
 .reset-filters {
-  padding: 12px 24px;
+  padding: 10px 20px; /* Reduced from 12px 24px */
   background: var(--black);
   color: var(--white);
   border: none;
   border-radius: 100px;
-  font-size: 14px;
+  font-size: 13px; /* Reduced from 14px */
   font-weight: 600;
   cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48" viewBox="0 0 24 24"><path fill="%23000000" stroke="%23FFFFFF" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 0 0 auto; /* Don't grow/shrink */
+  white-space: nowrap;
 }
 
 .reset-filters:hover {
@@ -560,14 +559,19 @@
   }
   
   .filter-row {
-    gap: 12px;
+    gap: 8px; /* Further reduced for mobile */
     justify-content: center;
   }
   
   .filter-select {
-    min-width: 120px;
-    font-size: 13px;
-    padding: 10px 16px;
+    min-width: 90px; /* Smaller for mobile */
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .reset-filters {
+    padding: 8px 16px;
+    font-size: 12px;
   }
   
   .pagination {
