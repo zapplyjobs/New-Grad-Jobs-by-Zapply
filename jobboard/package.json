@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2",
+    "puppeteer": "^24.15.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
@@ -29,7 +30,8 @@
     "eject": "react-scripts eject",
     "server": "node server.js",
     "dev-server": "nodemon server.js",
-    "dev": "concurrently \"npm start\" \"npm run dev-server\""
+    "dev": "concurrently \"npm start\" \"npm run dev-server\"",
+    "test-amazon": "node test-amazon.js"
   },
   "eslintConfig": {
     "extends": [

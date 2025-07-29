@@ -1,5 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 const { fetchAllRealJobs } = require('./real-career-scraper');
+const { scrapeAmazonJobs } = require('../../jobboard/ap.js');
 
 // Load comprehensive company database
 const companies = JSON.parse(fs.readFileSync('./.github/scripts/companies.json', 'utf8'));
@@ -22,36 +24,36 @@ ALL_COMPANIES.forEach(company => {
 const SEARCH_QUERIES = [
     // Core engineering roles
     'software engineer',
-    'software developer', 
+    'software developer',
     'full stack developer',
     'frontend developer',
     'backend developer',
     'mobile developer',
     'ios developer',
     'android developer',
-    
+
     // Specialized tech roles
     'machine learning engineer',
-    'data scientist', 
+    'data scientist',
     'data engineer',
     'devops engineer',
     'cloud engineer',
     'security engineer',
     'site reliability engineer',
     'platform engineer',
-    
+
     // Product & Design
     'product manager',
     'product designer',
     'ux designer',
     'ui designer',
-    
+
     // New grad specific
     'new grad software engineer',
     'entry level developer',
     'junior developer',
     'graduate software engineer',
-    
+
     // High-value roles
     'staff engineer',
     'senior software engineer',
@@ -67,9 +69,9 @@ function delay(ms) {
 // Fetch internship data from popular sources
 async function fetchInternshipData() {
     console.log('🎓 Fetching 2025/2026 internship opportunities...');
-    
+
     const internships = [];
-    
+
     // Popular internship tracking repositories and sources
     const internshipSources = [
         {
@@ -103,7 +105,7 @@ async function fetchInternshipData() {
             description: 'National Association of Colleges and Employers'
         }
     ];
-    
+
     // Add company-specific internship programs
     const companyInternshipPrograms = [
         { company: 'Google', program: 'STEP Internship', url: 'https://careers.google.com/students/', deadline: 'Various' },
@@ -117,14 +119,14 @@ async function fetchInternshipData() {
         { company: 'Stripe', program: 'Software Engineering Internship', url: 'https://stripe.com/jobs/internships', deadline: 'Various' },
         { company: 'Coinbase', program: 'Software Engineering Internship', url: 'https://coinbase.com/careers/students', deadline: 'Various' }
     ];
-    
+
     return {
         sources: internshipSources,
         companyPrograms: companyInternshipPrograms,
-        lastUpdated: new Date().toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        lastUpdated: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         })
     };
 }
@@ -146,11 +148,11 @@ function getCompanyCareerUrl(companyName) {
 
 function formatTimeAgo(dateString) {
     if (!dateString) return 'Recently';
-    
+
     const date = new Date(dateString);
     const now = new Date();
     const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
-    
+
     if (diffInHours < 24) {
         return `${diffInHours}h ago`;
     } else {
@@ -164,11 +166,11 @@ function formatTimeAgo(dateString) {
 
 function isJobOlderThanWeek(dateString) {
     if (!dateString) return false;
-    
+
     const date = new Date(dateString);
     const now = new Date();
     const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-    
+
     return diffInDays >= 7;
 }
 
@@ -176,20 +178,20 @@ function isUSOnlyJob(job) {
     const country = (job.job_country || '').toLowerCase().trim();
     const state = (job.job_state || '').toLowerCase().trim();
     const city = (job.job_city || '').toLowerCase().trim();
-    
+
     // Exclude jobs explicitly in non-US countries
     const nonUSCountries = [
-        'estonia', 'canada', 'uk', 'united kingdom', 'germany', 'france', 'netherlands', 
+        'estonia', 'canada', 'uk', 'united kingdom', 'germany', 'france', 'netherlands',
         'sweden', 'norway', 'denmark', 'finland', 'australia', 'india', 'singapore',
         'japan', 'south korea', 'brazil', 'mexico', 'spain', 'italy', 'poland',
         'ireland', 'israel', 'switzerland', 'austria', 'belgium', 'czech republic'
     ];
-    
+
     // If country is explicitly non-US, exclude
     if (nonUSCountries.includes(country)) {
         return false;
     }
-    
+
     // Exclude jobs with non-US cities/locations
     const nonUSCities = [
         'toronto', 'vancouver', 'montreal', 'london', 'berlin', 'amsterdam', 'stockholm',
@@ -197,67 +199,67 @@ function isUSOnlyJob(job) {
         'delhi', 'hyderabad', 'pune', 'singapore', 'tokyo', 'seoul', 'tel aviv',
         'zurich', 'geneva', 'dublin', 'tallinn', 'riga', 'vilnius', 'prague', 'budapest'
     ];
-    
+
     if (nonUSCities.includes(city)) {
         return false;
     }
-    
+
     // Include if country is US/USA/United States or empty (assume US)
     if (country === 'us' || country === 'usa' || country === 'united states' || country === '') {
         return true;
     }
-    
+
     // Include if it has US state codes
     const usStates = [
-        'al', 'ak', 'az', 'ar', 'ca', 'co', 'ct', 'de', 'fl', 'ga', 'hi', 'id', 'il', 'in', 'ia', 
-        'ks', 'ky', 'la', 'me', 'md', 'ma', 'mi', 'mn', 'ms', 'mo', 'mt', 'ne', 'nv', 'nh', 'nj', 
-        'nm', 'ny', 'nc', 'nd', 'oh', 'ok', 'or', 'pa', 'ri', 'sc', 'sd', 'tn', 'tx', 'ut', 'vt', 
+        'al', 'ak', 'az', 'ar', 'ca', 'co', 'ct', 'de', 'fl', 'ga', 'hi', 'id', 'il', 'in', 'ia',
+        'ks', 'ky', 'la', 'me', 'md', 'ma', 'mi', 'mn', 'ms', 'mo', 'mt', 'ne', 'nv', 'nh', 'nj',
+        'nm', 'ny', 'nc', 'nd', 'oh', 'ok', 'or', 'pa', 'ri', 'sc', 'sd', 'tn', 'tx', 'ut', 'vt',
         'va', 'wa', 'wv', 'wi', 'wy', 'dc'
     ];
-    
+
     if (usStates.includes(state)) {
         return true;
     }
-    
+
     // Include remote jobs (assume US remote unless stated otherwise)
     if (city.includes('remote') || state.includes('remote')) {
         return true;
     }
-    
+
     // Default to include (better to include than exclude)
     return true;
 }
 
 function getExperienceLevel(title, description = '') {
     const text = `${title} ${description}`.toLowerCase();
-    
+
     // Senior level indicators
-    if (text.includes('senior') || text.includes('sr.') || text.includes('lead') || 
+    if (text.includes('senior') || text.includes('sr.') || text.includes('lead') ||
         text.includes('principal') || text.includes('staff') || text.includes('architect')) {
         return 'Senior';
     }
-    
+
     // Entry level indicators  
-    if (text.includes('entry') || text.includes('junior') || text.includes('jr.') || 
+    if (text.includes('entry') || text.includes('junior') || text.includes('jr.') ||
         text.includes('new grad') || text.includes('graduate') || text.includes('university grad') ||
         text.includes('college grad') || text.includes(' grad ') || text.includes('recent grad') ||
-        text.includes('intern') || text.includes('associate') || text.includes('level 1') || 
+        text.includes('intern') || text.includes('associate') || text.includes('level 1') ||
         text.includes('l1') || text.includes('campus') || text.includes('student') ||
         text.includes('early career') || text.includes('0-2 years')) {
         return 'Entry-Level';
     }
-    
+
     return 'Mid-Level';
 }
 
 function getJobCategory(title, description = '') {
     const text = `${title} ${description}`.toLowerCase();
-    
+
     if (text.includes('ios') || text.includes('android') || text.includes('mobile') || text.includes('react native')) {
         return 'Mobile Development';
     }
     if (text.includes('frontend') || text.includes('front-end') || text.includes('react') || text.includes('vue') || text.includes('ui')) {
-        return 'Frontend Development'; 
+        return 'Frontend Development';
     }
     if (text.includes('backend') || text.includes('back-end') || text.includes('api') || text.includes('server')) {
         return 'Backend Development';
@@ -283,7 +285,7 @@ function getJobCategory(title, description = '') {
     if (text.includes('full stack') || text.includes('fullstack')) {
         return 'Full Stack Development';
     }
-    
+
     return 'Software Engineering';
 }
 
@@ -298,7 +300,7 @@ async function searchJobs(query, location = '') {
         url.searchParams.append('date_posted', 'month');
         url.searchParams.append('employment_types', 'FULLTIME');
         url.searchParams.append('job_requirements', 'under_3_years_experience,more_than_3_years_experience,no_experience');
-        
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -306,12 +308,12 @@ async function searchJobs(query, location = '') {
                 'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
             }
         });
-        
+
         if (!response.ok) {
             console.error(`API request failed for "${query}": ${response.status}`);
             return [];
         }
-        
+
         const data = await response.json();
         const jobs = data.data || [];
         console.log(`Query "${query}" returned ${jobs.length} jobs`);
@@ -325,25 +327,25 @@ async function searchJobs(query, location = '') {
 // Advanced job fetching with location targeting
 async function fetchAllJobs() {
     console.log('🔍 Starting comprehensive job search...');
-    
+
     const allJobs = [];
     const locations = ['San Francisco', 'New York', 'Seattle', 'Austin', 'Remote'];
-    
+
     // Search core queries across multiple locations
     const coreQueries = [
         'software engineer',
-        'frontend developer', 
+        'frontend developer',
         'backend developer',
         'data scientist',
         'machine learning engineer'
     ];
-    
+
     for (const query of coreQueries) {
         // Search without location first
         const jobs = await searchJobs(query);
         allJobs.push(...jobs);
         await delay(1200); // Respect rate limits
-        
+
         // Then search specific locations for higher-quality results
         for (const location of locations.slice(0, 2)) { // Limit to 2 locations to conserve API calls
             const locationJobs = await searchJobs(query, location);
@@ -351,7 +353,7 @@ async function fetchAllJobs() {
             await delay(1200);
         }
     }
-    
+
     // Search new grad specific terms
     const newGradQueries = ['new grad software engineer', 'entry level developer', 'graduate engineer'];
     for (const query of newGradQueries) {
@@ -359,7 +361,7 @@ async function fetchAllJobs() {
         allJobs.push(...jobs);
         await delay(1200);
     }
-    
+
     console.log(`📊 Total jobs fetched: ${allJobs.length}`);
     return allJobs;
 }
@@ -367,19 +369,19 @@ async function fetchAllJobs() {
 // Enhanced filtering with better company matching
 function filterTargetCompanyJobs(jobs) {
     console.log('🎯 Filtering for target companies...');
-    
+
     const targetJobs = jobs.filter(job => {
         const companyName = (job.employer_name || '').toLowerCase();
-        
+
         // Check against our comprehensive company list
         const isTargetCompany = COMPANY_BY_NAME[companyName] !== undefined;
-        
+
         if (isTargetCompany) {
             // Normalize company name for consistency
             job.employer_name = normalizeCompanyName(job.employer_name);
             return true;
         }
-        
+
         // Additional fuzzy matching for variations
         for (const company of ALL_COMPANIES) {
             for (const apiName of company.api_names) {
@@ -389,39 +391,39 @@ function filterTargetCompanyJobs(jobs) {
                 }
             }
         }
-        
+
         return false;
     });
-    
+
     console.log(`✨ Filtered to ${targetJobs.length} target company jobs`);
     console.log('🏢 Companies found:', [...new Set(targetJobs.map(j => j.employer_name))]);
-    
+
     // Remove duplicates more intelligently
     const uniqueJobs = targetJobs.filter((job, index, self) => {
-        return index === self.findIndex(j => 
-            j.job_title === job.job_title && 
+        return index === self.findIndex(j =>
+            j.job_title === job.job_title &&
             j.employer_name === job.employer_name &&
             j.job_city === job.job_city
         );
     });
-    
+
     console.log(`🧹 After deduplication: ${uniqueJobs.length} unique jobs`);
-    
+
     // Sort by company tier and recency
     uniqueJobs.sort((a, b) => {
         // Prioritize FAANG+ companies
         const aIsFAANG = companies.faang_plus.some(c => c.name === a.employer_name);
         const bIsFAANG = companies.faang_plus.some(c => c.name === b.employer_name);
-        
+
         if (aIsFAANG && !bIsFAANG) return -1;
         if (!aIsFAANG && bIsFAANG) return 1;
-        
+
         // Then by recency
         const aDate = new Date(a.job_posted_at_datetime_utc || 0);
         const bDate = new Date(b.job_posted_at_datetime_utc || 0);
         return bDate - aDate;
     });
-    
+
     return uniqueJobs.slice(0, 50); // Top 50 jobs
 }
 
@@ -432,7 +434,7 @@ function generateJobTable(jobs) {
 |---------|------|----------|--------|-------|----------|-------|
 | *No current openings* | *Check back tomorrow* | *-* | *-* | *-* | *-* | *-* |`;
     }
-    
+
     // Group jobs by company
     const jobsByCompany = {};
     jobs.forEach(job => {
@@ -441,32 +443,32 @@ function generateJobTable(jobs) {
         }
         jobsByCompany[job.employer_name].push(job);
     });
-    
+
     // Sort companies: FAANG+ first, then by job count
     const faangCompanies = companies.faang_plus.map(c => c.name);
     const sortedCompanies = Object.keys(jobsByCompany).sort((a, b) => {
         const aIsFaang = faangCompanies.includes(a);
         const bIsFaang = faangCompanies.includes(b);
-        
+
         if (aIsFaang && !bIsFaang) return -1;
         if (!aIsFaang && bIsFaang) return 1;
-        
+
         return jobsByCompany[b].length - jobsByCompany[a].length;
     });
-    
+
     let output = '';
-    
+
     // Show top 5 companies expanded, rest in collapsible sections
     const topCompanies = sortedCompanies.slice(0, 5);
     const remainingCompanies = sortedCompanies.slice(5);
-    
+
     // Top companies - check if they have more than 50 jobs
     topCompanies.forEach(companyName => {
         const companyJobs = jobsByCompany[companyName];
         const emoji = getCompanyEmoji(companyName);
         const isFaang = faangCompanies.includes(companyName);
         const tier = isFaang ? '⭐ FAANG+' : '🏢 Top Tech';
-        
+
         // If company has more than 50 jobs, make it collapsible
         if (companyJobs.length > 50) {
             output += `<details>\n`;
@@ -474,10 +476,10 @@ function generateJobTable(jobs) {
         } else {
             output += `### ${emoji} **${companyName}** (${companyJobs.length} positions) ${tier}\n\n`;
         }
-        
+
         output += `| Role | Location | Posted | Level | Category | Apply |\n`;
         output += `|------|----------|--------|-------|----------|-------|\n`;
-        
+
         companyJobs.forEach(job => {
             const role = job.job_title;
             const location = formatLocation(job.job_city, job.job_state);
@@ -485,7 +487,7 @@ function generateJobTable(jobs) {
             const level = getExperienceLevel(job.job_title, job.job_description);
             const category = getJobCategory(job.job_title, job.job_description);
             const applyLink = job.job_apply_link || getCompanyCareerUrl(job.employer_name);
-            
+
             // Add status indicators
             let statusIndicator = '';
             const description = (job.job_description || '').toLowerCase();
@@ -495,32 +497,32 @@ function generateJobTable(jobs) {
             if (description.includes('remote')) {
                 statusIndicator += ' 🏠';
             }
-            
+
             output += `| ${role}${statusIndicator} | ${location} | ${posted} | ${level} | ${category} | [Apply](${applyLink}) |\n`;
         });
-        
+
         if (companyJobs.length > 50) {
             output += `\n</details>\n\n`;
         } else {
             output += '\n';
         }
     });
-    
+
     // Remaining companies - collapsible sections
     if (remainingCompanies.length > 0) {
         output += `---\n\n### 📁 **More Companies** (${remainingCompanies.length} companies, ${remainingCompanies.reduce((sum, c) => sum + jobsByCompany[c].length, 0)} positions)\n\n`;
-        
+
         remainingCompanies.forEach(companyName => {
             const companyJobs = jobsByCompany[companyName];
             const emoji = getCompanyEmoji(companyName);
             const isFaang = faangCompanies.includes(companyName);
             const tier = isFaang ? '⭐ FAANG+' : '';
-            
+
             output += `<details>\n`;
             output += `<summary><strong>${emoji} ${companyName}</strong> (${companyJobs.length} positions) ${tier}</summary>\n\n`;
             output += `| Role | Location | Posted | Level | Category | Apply |\n`;
             output += `|------|----------|--------|-------|----------|-------|\n`;
-            
+
             companyJobs.forEach(job => {
                 const role = job.job_title;
                 const location = formatLocation(job.job_city, job.job_state);
@@ -528,7 +530,7 @@ function generateJobTable(jobs) {
                 const level = getExperienceLevel(job.job_title, job.job_description);
                 const category = getJobCategory(job.job_title, job.job_description);
                 const applyLink = job.job_apply_link || getCompanyCareerUrl(job.employer_name);
-                
+
                 // Add status indicators
                 let statusIndicator = '';
                 const description = (job.job_description || '').toLowerCase();
@@ -538,20 +540,20 @@ function generateJobTable(jobs) {
                 if (description.includes('remote')) {
                     statusIndicator += ' 🏠';
                 }
-                
+
                 output += `| ${role}${statusIndicator} | ${location} | ${posted} | ${level} | ${category} | [Apply](${applyLink}) |\n`;
             });
-            
+
             output += `\n</details>\n\n`;
         });
     }
-    
+
     return output;
 }
 
 function generateInternshipSection(internshipData) {
     if (!internshipData) return '';
-    
+
     return `
 ---
 
@@ -563,31 +565,31 @@ function generateInternshipSection(internshipData) {
 
 | Platform | Type | Description | Link |
 |----------|------|-------------|------|
-${internshipData.sources.map(source => 
-    `| **${source.name}** | ${source.type} | ${source.description} | [Visit](${source.url}) |`
-).join('\n')}
+${internshipData.sources.map(source =>
+        `| **${source.name}** | ${source.type} | ${source.description} | [Visit](${source.url}) |`
+    ).join('\n')}
 
 ### 🏢 **FAANG+ Internship Programs**
 
 | Company | Program | Application Link | Status |
 |---------|---------|------------------|--------|
 ${internshipData.companyPrograms.map(program => {
-    const companyObj = ALL_COMPANIES.find(c => c.name === program.company);
-    const emoji = companyObj ? companyObj.emoji : '🏢';
-    return `| ${emoji} **${program.company}** | ${program.program} | [Apply](${program.url}) | ${program.deadline} |`;
-}).join('\n')}
+        const companyObj = ALL_COMPANIES.find(c => c.name === program.company);
+        const emoji = companyObj ? companyObj.emoji : '🏢';
+        return `| ${emoji} **${program.company}** | ${program.program} | [Apply](${program.url}) | ${program.deadline} |`;
+    }).join('\n')}
 
 `;
 }
 
 function generateArchivedSection(archivedJobs) {
     if (archivedJobs.length === 0) return '';
-    
+
     const archivedStats = generateCompanyStats(archivedJobs);
-    const archivedFaangJobs = archivedJobs.filter(job => 
+    const archivedFaangJobs = archivedJobs.filter(job =>
         companies.faang_plus.some(c => c.name === job.employer_name)
     ).length;
-    
+
     return `
 ---
 
@@ -630,40 +632,40 @@ ${[...companies.top_tech, ...companies.enterprise_saas].map(c => `${c.emoji} [${
 ### 🔍 **Archived Filter by Role Category**
 
 ${Object.entries(archivedStats.byCategory)
-    .sort((a, b) => b[1] - a[1])
-    .map(([category, count]) => {
-        const icon = {
-            'Mobile Development': '📱',
-            'Frontend Development': '🎨', 
-            'Backend Development': '⚙️',
-            'Full Stack Development': '🌐',
-            'Machine Learning & AI': '🤖',
-            'Data Science & Analytics': '📊',
-            'DevOps & Infrastructure': '☁️',
-            'Security Engineering': '🛡️',
-            'Product Management': '📋',
-            'Design': '🎨',
-            'Software Engineering': '💻'
-        }[category] || '💻';
-        
-        const categoryJobs = archivedJobs.filter(job => getJobCategory(job.job_title, job.job_description) === category);
-        const topCompanies = [...new Set(categoryJobs.slice(0, 3).map(j => j.employer_name))];
-        
-        return `#### ${icon} **${category}** (${count} archived positions)
+            .sort((a, b) => b[1] - a[1])
+            .map(([category, count]) => {
+                const icon = {
+                    'Mobile Development': '📱',
+                    'Frontend Development': '🎨',
+                    'Backend Development': '⚙️',
+                    'Full Stack Development': '🌐',
+                    'Machine Learning & AI': '🤖',
+                    'Data Science & Analytics': '📊',
+                    'DevOps & Infrastructure': '☁️',
+                    'Security Engineering': '🛡️',
+                    'Product Management': '📋',
+                    'Design': '🎨',
+                    'Software Engineering': '💻'
+                }[category] || '💻';
+
+                const categoryJobs = archivedJobs.filter(job => getJobCategory(job.job_title, job.job_description) === category);
+                const topCompanies = [...new Set(categoryJobs.slice(0, 3).map(j => j.employer_name))];
+
+                return `#### ${icon} **${category}** (${count} archived positions)
 ${topCompanies.map(company => {
-    const companyObj = ALL_COMPANIES.find(c => c.name === company);
-    const emoji = companyObj ? companyObj.emoji : '🏢';
-    return `${emoji} ${company}`;
-}).join(' • ')}`;
-    }).join('\n\n')}
+                    const companyObj = ALL_COMPANIES.find(c => c.name === company);
+                    const emoji = companyObj ? companyObj.emoji : '🏢';
+                    return `${emoji} ${company}`;
+                }).join(' • ')}`;
+            }).join('\n\n')}
 
 ### 🌍 **Top Archived Locations**
 
 ${Object.entries(archivedStats.byLocation)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8)
-    .map(([location, count]) => `- **${location}**: ${count} archived positions`)
-    .join('\n')}
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8)
+            .map(([location, count]) => `- **${location}**: ${count} archived positions`)
+            .join('\n')}
 
 </details>
 
@@ -686,41 +688,41 @@ function generateCompanyStats(jobs) {
         byLocation: {},
         totalByCompany: {}
     };
-    
+
     jobs.forEach(job => {
         // Category stats
         const category = getJobCategory(job.job_title, job.job_description);
         stats.byCategory[category] = (stats.byCategory[category] || 0) + 1;
-        
+
         // Level stats
         const level = getExperienceLevel(job.job_title, job.job_description);
         stats.byLevel[level]++;
-        
+
         // Location stats
         const location = formatLocation(job.job_city, job.job_state);
         stats.byLocation[location] = (stats.byLocation[location] || 0) + 1;
-        
+
         // Company stats
         stats.totalByCompany[job.employer_name] = (stats.totalByCompany[job.employer_name] || 0) + 1;
     });
-    
+
     return stats;
 }
 
 // Generate comprehensive README
 async function generateReadme(currentJobs, archivedJobs = [], internshipData = null) {
     const stats = generateCompanyStats(currentJobs);
-    const currentDate = new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
-    
+
     const totalCompanies = Object.keys(stats.totalByCompany).length;
-    const faangJobs = currentJobs.filter(job => 
+    const faangJobs = currentJobs.filter(job =>
         companies.faang_plus.some(c => c.name === job.employer_name)
     ).length;
-    
+
     return `# 💼 2026 New Grad Jobs by Zapply
 
 **🚀 Job opportunities from ${totalCompanies}+ top companies • Updated daily • US Positions**
@@ -784,42 +786,42 @@ ${[...companies.top_tech, ...companies.enterprise_saas].map(c => `${c.emoji} [${
 ## 🔍 **Filter by Role Category**
 
 ${Object.entries(stats.byCategory)
-    .sort((a, b) => b[1] - a[1])
-    .map(([category, count]) => {
-        const icon = {
-            'Mobile Development': '📱',
-            'Frontend Development': '🎨', 
-            'Backend Development': '⚙️',
-            'Full Stack Development': '🌐',
-            'Machine Learning & AI': '🤖',
-            'Data Science & Analytics': '📊',
-            'DevOps & Infrastructure': '☁️',
-            'Security Engineering': '🛡️',
-            'Product Management': '📋',
-            'Design': '🎨',
-            'Software Engineering': '💻'
-        }[category] || '💻';
-        
-        const categoryJobs = currentJobs.filter(job => getJobCategory(job.job_title, job.job_description) === category);
-        const topCompanies = [...new Set(categoryJobs.slice(0, 3).map(j => j.employer_name))];
-        
-        return `### ${icon} **${category}** (${count} positions)
+            .sort((a, b) => b[1] - a[1])
+            .map(([category, count]) => {
+                const icon = {
+                    'Mobile Development': '📱',
+                    'Frontend Development': '🎨',
+                    'Backend Development': '⚙️',
+                    'Full Stack Development': '🌐',
+                    'Machine Learning & AI': '🤖',
+                    'Data Science & Analytics': '📊',
+                    'DevOps & Infrastructure': '☁️',
+                    'Security Engineering': '🛡️',
+                    'Product Management': '📋',
+                    'Design': '🎨',
+                    'Software Engineering': '💻'
+                }[category] || '💻';
+
+                const categoryJobs = currentJobs.filter(job => getJobCategory(job.job_title, job.job_description) === category);
+                const topCompanies = [...new Set(categoryJobs.slice(0, 3).map(j => j.employer_name))];
+
+                return `### ${icon} **${category}** (${count} positions)
 ${topCompanies.map(company => {
-    const companyObj = ALL_COMPANIES.find(c => c.name === company);
-    const emoji = companyObj ? companyObj.emoji : '🏢';
-    return `${emoji} ${company}`;
-}).join(' • ')}`;
-    }).join('\n\n')}
+                    const companyObj = ALL_COMPANIES.find(c => c.name === company);
+                    const emoji = companyObj ? companyObj.emoji : '🏢';
+                    return `${emoji} ${company}`;
+                }).join(' • ')}`;
+            }).join('\n\n')}
 
 ---
 
 ## 🌍 **Top Locations**
 
 ${Object.entries(stats.byLocation)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8)
-    .map(([location, count]) => `- **${location}**: ${count} positions`)
-    .join('\n')}
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8)
+            .map(([location, count]) => `- **${location}**: ${count} positions`)
+            .join('\n')}
 
 ---
 
@@ -874,65 +876,87 @@ Spotted an issue or want to suggest improvements?
 }
 
 function writeNewJobsJson(currentJobs) {
-  const D = '.github/data';
-  if (!fs.existsSync(D)) fs.mkdirSync(D, { recursive: true });
+    const D = '.github/data';
+    if (!fs.existsSync(D)) fs.mkdirSync(D, { recursive: true });
 
-  let prev = [];
-  try {
-    prev = JSON.parse(fs.readFileSync(`${D}/previous.json`, 'utf8'));
-  } catch {
-    // first run: no previous.json
-  }
+    let prev = [];
+    try {
+        prev = JSON.parse(fs.readFileSync(`${D}/previous.json`, 'utf8'));
+    } catch {
+        // first run: no previous.json
+    }
 
-  const seen = new Set(prev.map(j => j.job_apply_link));
-  const delta = currentJobs.filter(j => !seen.has(j.job_apply_link));
+    const seen = new Set(prev.map(j => j.job_apply_link));
+    const delta = currentJobs.filter(j => !seen.has(j.job_apply_link));
 
-  fs.writeFileSync(`${D}/new_jobs.json`, JSON.stringify(delta, null, 2));
-  fs.writeFileSync(`${D}/previous.json`, JSON.stringify(currentJobs, null, 2));
+    fs.writeFileSync(`${D}/new_jobs.json`, JSON.stringify(delta, null, 2));
+    fs.writeFileSync(`${D}/previous.json`, JSON.stringify(currentJobs, null, 2));
 }
 
 async function updateReadme() {
-  try {
-    console.log('🚀 Starting Zapply job board update...');
+    try {
+        console.log('🚀 Starting Zapply job board update...');
 
-    // Fetch REAL jobs from actual career pages
-    const allJobs = await fetchAllRealJobs();
-    if (allJobs.length === 0) {
-      console.log('⚠️ No jobs found, keeping existing README');
-      return;
+        console.log('📦 Loading Amazon jobs from JSON file...');
+        let amazonJobs = [];
+        try {
+            // Adjust the path based on where your JSON file is located
+            const jsonPath = path.join(__dirname, '..', '..', 'jobboard', 'amazonjobs.json');
+
+            if (fs.existsSync(jsonPath)) {
+                const jsonData = fs.readFileSync(jsonPath, 'utf8');
+                amazonJobs = JSON.parse(jsonData);
+                console.log(`✅ Loaded ${amazonJobs.length} Amazon jobs from JSON file`);
+            } else {
+                console.log('⚠️ No amazonjobs.json file found at:', jsonPath);
+                console.log('⚠️ Run the Amazon scraper first to generate the JSON file!');
+            }
+        } catch (error) {
+            console.error('❌ Error loading Amazon jobs from JSON:', error);
+            amazonJobs = []; // Use empty array if loading fails
+        }
+
+        // 2. Fetch other jobs normally
+        const otherJobs = await fetchAllRealJobs();
+
+        // 3. Combine all jobs
+        const allJobs = [...amazonJobs, ...otherJobs];
+        if (allJobs.length === 0) {
+            console.log('⚠️ No jobs found, keeping existing README');
+            return;
+        }
+
+        // Filter US-only jobs
+        const usJobs = allJobs.filter(job => isUSOnlyJob(job));
+        // Separate current and archived jobs
+        const currentJobs = usJobs.filter(job => !isJobOlderThanWeek(job.job_posted_at_datetime_utc));
+        const archivedJobs = usJobs.filter(job => isJobOlderThanWeek(job.job_posted_at_datetime_utc));
+
+        // 1️⃣ Dump only the new jobs JSON
+        writeNewJobsJson(currentJobs);
+
+        // Fetch internship data and generate README
+        const internshipData = await fetchInternshipData();
+        const readmeContent = await generateReadme(currentJobs, archivedJobs, internshipData);
+
+        // Write README.md
+        fs.writeFileSync('README.md', readmeContent);
+        console.log(`✅ Zapply job board updated with ${currentJobs.length} current opportunities!`);
+
+        // Log summary
+        const stats = generateCompanyStats(currentJobs);
+        console.log('\n📊 Summary:');
+        console.log(`- Total Jobs (All): ${allJobs.length}`);
+        console.log(`- US-Only Jobs: ${usJobs.length}`);
+        console.log(`- Current Jobs: ${currentJobs.length}`);
+        console.log(`- Archived Jobs: ${archivedJobs.length}`);
+        console.log(`- Companies: ${Object.keys(stats.totalByCompany).length}`);
+        console.log(`- Categories: ${Object.keys(stats.byCategory).length}`);
+        console.log(`- Locations: ${Object.keys(stats.byLocation).length}`);
+    } catch (err) {
+        console.error('❌ Error updating README:', err);
+        process.exit(1);
     }
-
-    // Filter US-only jobs
-    const usJobs = allJobs.filter(job => isUSOnlyJob(job));
-    // Separate current and archived jobs
-    const currentJobs = usJobs.filter(job => !isJobOlderThanWeek(job.job_posted_at_datetime_utc));
-    const archivedJobs = usJobs.filter(job => isJobOlderThanWeek(job.job_posted_at_datetime_utc));
-
-    // 1️⃣ Dump only the new jobs JSON
-    writeNewJobsJson(currentJobs);
-
-    // Fetch internship data and generate README
-    const internshipData = await fetchInternshipData();
-    const readmeContent = await generateReadme(currentJobs, archivedJobs, internshipData);
-
-    // Write README.md
-    fs.writeFileSync('README.md', readmeContent);
-    console.log(`✅ Zapply job board updated with ${currentJobs.length} current opportunities!`);
-
-    // Log summary
-    const stats = generateCompanyStats(currentJobs);
-    console.log('\n📊 Summary:');
-    console.log(`- Total Jobs (All): ${allJobs.length}`);
-    console.log(`- US-Only Jobs: ${usJobs.length}`);
-    console.log(`- Current Jobs: ${currentJobs.length}`);
-    console.log(`- Archived Jobs: ${archivedJobs.length}`);
-    console.log(`- Companies: ${Object.keys(stats.totalByCompany).length}`);
-    console.log(`- Categories: ${Object.keys(stats.byCategory).length}`);
-    console.log(`- Locations: ${Object.keys(stats.byLocation).length}`);
-  } catch (err) {
-    console.error('❌ Error updating README:', err);
-    process.exit(1);
-  }
 }
 
 // Run the update
